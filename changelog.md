@@ -19,4 +19,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dev / watch scripts for development
 - GitHub actions setup
 - Heroku deployment
+- Commit-lint and Husky
 
