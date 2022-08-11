@@ -20,4 +20,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GitHub actions setup
 - Heroku deployment
 - Commit-lint and Husky
+- Prisma library handling postgres data
 

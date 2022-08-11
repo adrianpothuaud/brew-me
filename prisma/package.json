@@ -1,0 +1,16 @@
+{
+  "name": "@brew-me/prisma",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc --build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prisma": "^4.2.1",
+    "typescript": "^4.7.4"
+  }
+}

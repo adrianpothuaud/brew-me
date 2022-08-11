@@ -1,45 +1,80 @@
 {
   "name": "brew-me",
   "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Sample Real World application, this is all about beers.",
+  "keywords": [
+    "node.js",
+    "typescript",
+    "monorepo",
+    "vite",
+    "react",
+    "express",
+    "prisma",
+    "heroku",
+    "github actions"
+  ],
+  "author": "Adrian Pothuaud <adrianpothuaud@protonmail.com>",
+  "license": "ISC",
+  "workspaces": [
+    "client",
+    "e2e",
+    "prisma",
+    "server"
+  ],
+  "scripts": {
+    "prepare": "husky install",
+    "clean:client": "cd client/ && rm -rf node_modules package-lock.json dist **/vite.config.ts.timestamp*",
+    "clean:e2e": "cd e2e/ && rm -rf node_modules package-lock.json dist",
+    "clean:prisma": "cd prisma/ && rm -rf node_modules package-lock.json dist",
+    "clean:server": "cd server/ && rm -rf node_modules package-lock.json dist",
+    "clean:root": "rm -rf node_modules package-lock.json",
+    "clean": "run-s clean:client clean:e2e clean:prisma clean:server clean:root",
+    "lint": "eslint . --ext .js --color",
+    "lint:fix": "eslint . --ext .js --color --fix",
+    "build": "npm run build --workspace client --workspace server",
+    "watch:build": "doppler run -- npm-watch build",
+    "start": "cd server/dist && node index.js",
+    "watch:start": "doppler run -- npm-watch start",
+    "test": "npm run test --workspace client --workspace e2e --workspace server --if-present",
+    "prisma:sync": "npm run prisma db push --workspace prisma"
+  },
   "watch": {
     "build": {
       "patterns": [
+        "./client/public/*",
         "./client/*.html",
         "./client/*.js",
         "./client/src/**/*",
-        "./lib/src/**/*",
+        "./prisma/src/**/*",
         "./server/src/**/*"
       ],
-      "extensions": "ts,js,html,css",
+      "extensions": "ts,js,html,css,tsx,jsx",
       "quiet": false,
       "legacyWatch": true,
-      "delay": 2500,
       "runOnChangeOnly": false
     },
     "dev": {
       "patterns": [
         "./client/dist/**/*",
-        "./lib/dist/**/*",
+        "./prisma/dist/**/*",
         "./server/src/**/*"
       ],
-      "extensions": "ts,js,html,css",
+      "extensions": "ts,js,html,css,tsx,jsx",
       "quiet": false,
       "legacyWatch": true,
-      "delay": 2500,
+      "delay": 4000,
       "runOnChangeOnly": false
     },
     "start": {
       "patterns": [
         "./client/dist/**/*",
-        "./lib/dist/**/*",
+        "./prisma/dist/**/*",
         "./server/src/**/*"
       ],
-      "extensions": "ts,js,html,css",
+      "extensions": "ts,js,html,css,tsx,jsx",
       "quiet": false,
       "legacyWatch": true,
-      "delay": 2500,
+      "delay": 4000,
       "runOnChangeOnly": false
     },
     "test": {
@@ -47,46 +82,29 @@
         "./client/*.html",
         "./client/*.js",
         "./client/src/**/*",
-        "./lib/src/**/*",
+        "./prisma/src/**/*",
         "./server/src/**/*"
       ],
-      "extensions": "ts,js,html,css",
+      "extensions": "ts,js,html,css,tsx,jsx",
       "quiet": false,
       "legacyWatch": true,
       "delay": 2500,
       "runOnChangeOnly": false
     }
   },
-  "scripts": {
-    "build": "npm run build --workspace client --workspace lib --workspace server",
-    "start": "cd server/dist && node index.js",
-    "dev": "npm run dev --workspace server",
-    "prepare": "husky install",
-    "watch:build": "npm-watch build",
-    "watch:dev": "npm-watch dev",
-    "watch:start": "npm-watch start",
-    "watch": "run-p watch:build watch:dev",
-    "test": "npm run test --workspace client --workspace e2e --workspace server --if-present"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "workspaces": [
-    "client",
-    "e2e",
-    "eslint-configs",
-    "lib",
-    "server"
-  ],
-  "dependencies": {
-    "typescript": "^4.7.4"
-  },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/parser": "^5.33.0",
+    "eslint": "^8.21.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-react": "^7.30.1",
     "husky": "^8.0.1",
     "npm-run-all": "^4.1.5",
     "npm-watch": "^0.11.0",
-    "wait-run": "^1.2.0"
+    "typescript": "^4.7.4"
   }
 }
