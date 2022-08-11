@@ -35,12 +35,12 @@
     "clean": "run-s clean:documents clean:notifications clean:services clean:client clean:e2e clean:server clean:root",
     "lint": "eslint . --ext .js,.ts,.tsx --color",
     "lint:fix": "eslint . --ext .js,.ts,.tsx  --color --fix",
-    "db:sync": "npm run db:sync --workspace services",
-    "build": "npm run build --workspace documents --workspace notifications --workspace services --workspace client --workspace server",
+    "db:sync": "npm run db:sync --workspace @brew-me/services",
+    "build": "npm run build --workspace @brew-me/documents --workspace @brew-me/notifications --workspace @brew-me/services --workspace @brew-me/client --workspace @brew-me/server",
     "watch:build": "npm-watch build",
     "start": "cd server/dist && node index.js",
     "watch:start": "npm-watch start",
-    "test": "npm run test --workspace e2e"
+    "test": "npm run test --workspace @brew-me/e2e"
   },
   "watch": {
     "build": {
