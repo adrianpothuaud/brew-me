@@ -1,0 +1,9 @@
+.idea/
+
+.husky/_/
+
+node_modules/
+
+**/.idea/
+**/dist/
+**/node_modules/
