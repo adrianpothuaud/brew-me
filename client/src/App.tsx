@@ -1,44 +1,32 @@
-import { useEffect, useState } from 'react'
+import React from 'react'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from 'react-router-dom'
 
-import reactLogo from './assets/react.svg'
-import './App.css'
+import AboutScreen from './components/screens/AboutScreen'
+import ContactScreen from './components/screens/ContactScreen'
+import GDPRScreen from './components/screens/GDPRScreen'
+import HomeScreen from './components/screens/HomeScreen'
+import LoginScreen from './components/screens/LoginScreen'
+import NoMatchScreen from './components/screens/NoMatchScreen'
+import RegisterScreen from './components/screens/RegisterScreen'
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  const get = async () => {
-    const res = await fetch('/api/test');
-    const body = await res.json()
-    console.log(body)
-  }
-
-  useEffect(() => {
-    get();
-  })
-
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomeScreen />} />
+        <Route path="/about" element={<AboutScreen />} />
+        <Route path="/auth/login" element={<LoginScreen />} />
+        <Route path="/auth/register" element={<RegisterScreen />} />
+        <Route path="/contact" element={<ContactScreen />} />
+        <Route path="/gdpr" element={<GDPRScreen />} />
+
+        <Route path="*" element={<NoMatchScreen />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
