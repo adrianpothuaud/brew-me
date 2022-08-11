@@ -16,59 +16,56 @@
   "author": "Adrian Pothuaud <adrianpothuaud@protonmail.com>",
   "license": "ISC",
   "workspaces": [
+    "packages/documents",
+    "packages/notifications",
+    "packages/services",
     "client",
     "e2e",
-    "prisma",
     "server"
   ],
   "scripts": {
     "prepare": "husky install",
+    "clean:documents": "cd packages/documents/ && rm -rf node_modules package-lock.json dist",
+    "clean:notifications": "cd packages/notifications/ && rm -rf node_modules package-lock.json dist",
+    "clean:services": "cd packages/services/ && rm -rf node_modules package-lock.json dist",
     "clean:client": "cd client/ && rm -rf node_modules package-lock.json dist **/vite.config.ts.timestamp*",
     "clean:e2e": "cd e2e/ && rm -rf node_modules package-lock.json dist",
-    "clean:prisma": "cd prisma/ && rm -rf node_modules package-lock.json dist",
     "clean:server": "cd server/ && rm -rf node_modules package-lock.json dist",
     "clean:root": "rm -rf node_modules package-lock.json",
-    "clean": "run-s clean:client clean:e2e clean:prisma clean:server clean:root",
+    "clean": "run-s clean:documents clean:notifications clean:services clean:client clean:e2e clean:server clean:root",
     "lint": "eslint . --ext .js --color",
     "lint:fix": "eslint . --ext .js --color --fix",
-    "build": "npm run build --workspace client --workspace server",
-    "watch:build": "doppler run -- npm-watch build",
+    "build": "npm run build --workspace documents --workspace notifications --workspace services --workspace client --workspace server",
+    "watch:build": "npm-watch build",
     "start": "cd server/dist && node index.js",
-    "watch:start": "doppler run -- npm-watch start",
-    "test": "npm run test --workspace client --workspace e2e --workspace server --if-present",
-    "prisma:sync": "npm run prisma db push --workspace prisma"
+    "watch:start": "npm-watch start",
+    "test": "npm run test --workspace e2e",
+    "backend-lib:sync": "npm run db:sync --workspace services"
   },
   "watch": {
     "build": {
       "patterns": [
+        "./packages/documents/src/**/*",
+        "./packages/notifications/src/**/*",
+        "./packages/services/src/**/*",
+        "./packages/services/prisma/schema.prisma",
         "./client/public/*",
         "./client/*.html",
         "./client/*.js",
         "./client/src/**/*",
-        "./prisma/src/**/*",
         "./server/src/**/*"
       ],
       "extensions": "ts,js,html,css,tsx,jsx",
       "quiet": false,
       "legacyWatch": true,
-      "runOnChangeOnly": false
-    },
-    "dev": {
-      "patterns": [
-        "./client/dist/**/*",
-        "./prisma/dist/**/*",
-        "./server/src/**/*"
-      ],
-      "extensions": "ts,js,html,css,tsx,jsx",
-      "quiet": false,
-      "legacyWatch": true,
-      "delay": 4000,
       "runOnChangeOnly": false
     },
     "start": {
       "patterns": [
+        "./packages/documents/dist/**/*",
+        "./packages/notifications/dist/**/*",
+        "./packages/services/dist/**/*",
         "./client/dist/**/*",
-        "./prisma/dist/**/*",
         "./server/src/**/*"
       ],
       "extensions": "ts,js,html,css,tsx,jsx",
@@ -79,10 +76,19 @@
     },
     "test": {
       "patterns": [
+        "./packages/documents/src/**/*",
+        "./packages/notifications/src/**/*",
+        "./packages/services/src/**/*",
+        "./packages/services/prisma/schema.prisma",
+        "./client/public/*",
         "./client/*.html",
         "./client/*.js",
         "./client/src/**/*",
-        "./prisma/src/**/*",
+        "./server/src/**/*",
+        "./packages/documents/dist/**/*",
+        "./packages/notifications/dist/**/*",
+        "./packages/services/dist/**/*",
+        "./client/dist/**/*",
         "./server/src/**/*"
       ],
       "extensions": "ts,js,html,css,tsx,jsx",

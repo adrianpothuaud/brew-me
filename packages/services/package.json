@@ -1,0 +1,20 @@
+{
+  "name": "@brew-me/services",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc --build",
+    "db:sync": "prisma db push && prisma generate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prisma": "^4.2.1",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.2.1"
+  }
+}

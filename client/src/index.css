@@ -1,0 +1,7 @@
+fieldset {
+  margin: 0;
+  padding: 4px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+}

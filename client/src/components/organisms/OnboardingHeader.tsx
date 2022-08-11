@@ -1,35 +1,59 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
 
-const useStyles = createUseStyles({
+import { flexRowBetweenCenter } from '../../styles'
 
+const useStyles = createUseStyles({
+  brandIcon: {
+    height: 60,
+    width: 60,
+  },
+  centerNav: {
+    'display': 'flex',
+    'flexDirection': 'row',
+    '& ul': {
+      'display': 'flex',
+      'flexDirection': 'row',
+      'justifyContent': 'space-around',
+      'alignItems': 'center',
+      'listStyleType': 'none',
+      '& li': {
+        'padding': 4,
+      },
+    },
+  },
+  header: {
+    ...flexRowBetweenCenter,
+  },
 })
 
 export default function OnboardingHeader() {
+  const classes = useStyles()
+
   return (
-    <header>
+    <header className={classes.header}>
       {/* left side brand logo */}
-      <img alt="brand logo" src="/favicon-32x32.png" />
+      <img alt="brand logo" className={classes.brandIcon} src="/favicon-32x32.png" />
       {/* header nav */}
-      <nav>
+      <nav className={classes.centerNav}>
         <ul>
           <li>
-            <a href="/">Home</a>
+            <a data-pw="home link" href="/">Home</a>
           </li>
           <li>
-            <a href="/beers">ALL BEERS</a>
+            <a data-pw="beers link" href="/beers">ALL BEERS</a>
           </li>
           <li>
-            <a href="/champions">Beer Champions</a>
+            <a data-pw="champions link" href="/champions">Beer Champions</a>
           </li>
           <li>
-            <a href="/about">About</a>
+            <a data-pw="about link" href="/about">About</a>
           </li>
           <li>
-            <a href="/contact">Contact</a>
+            <a data-pw="contact link" href="/contact">Contact</a>
           </li>
           <li>
-            <a href="/gdpr">GDPR</a>
+            <a data-pw="gdpr link" href="/gdpr">GDPR</a>
           </li>
         </ul>
       </nav>
@@ -37,13 +61,13 @@ export default function OnboardingHeader() {
       <nav>
         <ul>
           <li>
-            <a href="/auth/login">Login</a>
+            <a data-pw="login link" href="/auth/login">Login</a>
           </li>
           <li>
-            <a href="/auth/register?as=client">Create Client account</a>
+            <a data-pw="register as client link" href="/auth/register/client">Create Client account</a>
           </li>
           <li>
-            <a href="/auth/register?as=brewer">Create Brewer account</a>
+            <a data-pw="register as brewer link" href="/auth/register/brewer">Create Brewer account</a>
           </li>
         </ul>
       </nav>
