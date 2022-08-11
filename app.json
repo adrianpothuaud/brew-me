@@ -1,0 +1,8 @@
+{
+  "name": "Brew Me",
+  "description": "A decoupled monorepo with TypeScript, Vite React client and Express server",
+  "repository": "https://github.com/adrianpothuaud/brew-me",
+  "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/main/public/node.svg",
+  "keywords": ["node", "typescript", "vite", "react", "express", "monorepo", "heroku"],
+  "image": "heroku/nodejs"
+}
