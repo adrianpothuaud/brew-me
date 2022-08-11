@@ -13,14 +13,14 @@ jobs:
       - name: Install dependencies
         run: npm i
       - name: Synchronise database
-        run: npm run db:sync
+        run: doppler run -- npm run db:sync
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
       - name: Build packages
-        run: npm run build
+        run: doppler run -- npm run build
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
       - name: Start application server and run e2e tests
-        run: npx start-server-and-test start http://localhost:8080 test
+        run: doppler run -- npx start-server-and-test start http://localhost:8080 test
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
