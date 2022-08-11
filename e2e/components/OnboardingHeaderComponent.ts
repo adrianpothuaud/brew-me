@@ -1,10 +1,10 @@
-import { Page } from "@playwright/test";
+import { Page } from '@playwright/test'
 
 class OnboardingHeaderComponent {
   page: Page
 
   constructor(page: Page) {
-    this.page = page;
+    this.page = page
   }
 
   async goToRegisterPage() {

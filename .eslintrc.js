@@ -8,6 +8,7 @@ module.exports = {
     'plugin:react/recommended',
     'google',
   ],
+  'ignorePatterns': ['**/dist/*'],
   'parser': '@typescript-eslint/parser',
   'parserOptions': {
     'ecmaFeatures': {
@@ -37,5 +38,10 @@ module.exports = {
     'require-jsdoc': 'off',
     'semi': ['error', 'never'],
     'react/prop-types': [2],
+  },
+  'settings': {
+    react: {
+      version: 'detect',
+    },
   },
 }

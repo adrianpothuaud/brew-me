@@ -1,7 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
-import { createUseStyles } from 'react-jss'
+// import { createUseStyles } from 'react-jss'
 import { LoremIpsum } from 'react-lorem-ipsum'
 import { useParams } from 'react-router-dom'
 
@@ -20,14 +20,14 @@ type RegistrationFormData = {
   password: string;
 };
 
-const useStyles = createUseStyles({
+// const useStyles = createUseStyles({
 
-})
+// })
 
 export default function RegisterScreen() {
-  const classes = useStyles()
+  // const classes = useStyles()
   const params = useParams()
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm<RegistrationFormData>()
+  const { register, handleSubmit } = useForm<RegistrationFormData>()
 
   const onSubmit = handleSubmit((data) => console.log(data))
 
