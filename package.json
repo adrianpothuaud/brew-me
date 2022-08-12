@@ -17,7 +17,9 @@
   "license": "ISC",
   "workspaces": [
     "packages/documents",
+    "packages/error",
     "packages/notifications",
+    "packages/payments",
     "packages/services",
     "client",
     "e2e",
@@ -26,27 +28,38 @@
   "scripts": {
     "prepare": "husky install",
     "clean:documents": "cd packages/documents/ && rm -rf node_modules package-lock.json dist",
+    "clean:error": "cd packages/error/ && rm -rf node_modules package-lock.json dist",
     "clean:notifications": "cd packages/notifications/ && rm -rf node_modules package-lock.json dist",
+    "clean:payments": "cd packages/payments/ && rm -rf node_modules package-lock.json dist",
     "clean:services": "cd packages/services/ && rm -rf node_modules package-lock.json dist",
     "clean:client": "cd client/ && rm -rf node_modules package-lock.json dist **/vite.config.ts.timestamp*",
     "clean:e2e": "cd e2e/ && rm -rf node_modules package-lock.json dist",
     "clean:server": "cd server/ && rm -rf node_modules package-lock.json dist",
     "clean:root": "rm -rf node_modules package-lock.json",
-    "clean": "run-s clean:documents clean:notifications clean:services clean:client clean:e2e clean:server clean:root",
+    "clean": "run-s clean:documents clean:error clean:notifications clean:payments clean:services clean:client clean:e2e clean:server clean:root",
     "lint": "eslint . --ext .js,.ts,.tsx --color",
     "lint:fix": "eslint . --ext .js,.ts,.tsx  --color --fix",
-    "db:sync": "npm run db:sync --workspace @brew-me/services",
-    "build": "npm run build --workspace @brew-me/documents --workspace @brew-me/notifications --workspace @brew-me/services --workspace @brew-me/client --workspace @brew-me/server",
+    "db:sync": "npm run db:sync --workspaces --if-present",
+    "build": "npm run build -w @brew-me/error -w @brew-me/services -w @brew-me/client -w @brew-me/server",
     "watch:build": "npm-watch build",
+    "dev": "doppler run -- npm run db:sync && npm run build && cd server/dist && doppler run -- node index.js",
+    "watch:dev": "npm-watch dev",
     "start": "cd server/dist && node index.js",
     "watch:start": "npm-watch start",
-    "test": "npm run test --workspace @brew-me/e2e"
+    "db:stdio": "npm run db:stdio --workspaces --if-present",
+    "test": "doppler run -- npm run test --workspaces --if-present",
+    "test:e2e": "doppler run -- npm run test -w @brew-me/e2e",
+    "watch:test": "npm-watch test",
+    "watch:all": "run-p watch:build watch:start watch:test"
   },
   "watch": {
     "build": {
       "patterns": [
+        "./packages/api-wrapper/src/**/*",
         "./packages/documents/src/**/*",
+        "./packages/error/src/**/*",
         "./packages/notifications/src/**/*",
+        "./packages/payments/src/**/*",
         "./packages/services/src/**/*",
         "./packages/services/prisma/schema.prisma",
         "./client/public/*",
@@ -55,29 +68,35 @@
         "./client/src/**/*",
         "./server/src/**/*"
       ],
-      "extensions": "ts,js,html,css,tsx,jsx",
-      "quiet": false,
-      "legacyWatch": true,
-      "runOnChangeOnly": false
+      "extensions": "ts,js,html,css,tsx,jsx"
     },
     "start": {
       "patterns": [
+        "./packages/api-wrapper/dist/**/*",
         "./packages/documents/dist/**/*",
+        "./packages/error/dist/**/*",
         "./packages/notifications/dist/**/*",
+        "./packages/payments/dist/**/*",
         "./packages/services/dist/**/*",
         "./client/dist/**/*",
-        "./server/src/**/*"
+        "./server/dist/**/*"
       ],
-      "extensions": "ts,js,html,css,tsx,jsx",
-      "quiet": false,
-      "legacyWatch": true,
-      "delay": 4000,
-      "runOnChangeOnly": false
+      "extensions": "ts,js,html,css,tsx,jsx"
+    },
+    "dev": {
+      "patterns": [
+        "./**/src/**/*",
+        "!./**/dist/**/*"
+      ],
+      "extensions": "ts,tsx,js,jsx,html,css,prisma"
     },
     "test": {
       "patterns": [
+        "./packages/api-wrapper/src/**/*",
         "./packages/documents/src/**/*",
+        "./packages/error/src/**/*",
         "./packages/notifications/src/**/*",
+        "./packages/payments/src/**/*",
         "./packages/services/src/**/*",
         "./packages/services/prisma/schema.prisma",
         "./client/public/*",
@@ -85,22 +104,22 @@
         "./client/*.js",
         "./client/src/**/*",
         "./server/src/**/*",
+        "./packages/api-wrapper/dist/**/*",
         "./packages/documents/dist/**/*",
+        "./packages/error/dist/**/*",
+        "./packages/notifications/dist/**/*",
         "./packages/notifications/dist/**/*",
         "./packages/services/dist/**/*",
         "./client/dist/**/*",
         "./server/src/**/*"
       ],
-      "extensions": "ts,js,html,css,tsx,jsx",
-      "quiet": false,
-      "legacyWatch": true,
-      "delay": 2500,
-      "runOnChangeOnly": false
+      "extensions": "ts,js,html,css,tsx,jsx"
     }
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
+    "@types/node": "^18.7.2",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "eslint": "^8.21.0",

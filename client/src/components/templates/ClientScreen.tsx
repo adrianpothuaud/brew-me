@@ -5,10 +5,14 @@ import React from 'react'
 
 // })
 
-export default function ClientScreen() {
+type ClientScreenProps = {
+  children: React.ReactNode
+}
+
+export default function ClientScreen(props: ClientScreenProps) {
   return (
     <>
-
+      {props.children}
     </>
   )
 }

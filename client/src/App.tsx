@@ -7,12 +7,18 @@ import {
 } from 'react-router-dom'
 
 import AboutScreen from './components/screens/AboutScreen'
+import BeersScreen from './components/screens/BeersScreen'
+import BrewerHomeScreen from './components/screens/BrewerHomeScreen'
+import ChampionsScreen from './components/screens/ChampionsScreen'
+import ClientHomeScreen from './components/screens/ClientHomeScreen'
 import ContactScreen from './components/screens/ContactScreen'
 import GDPRScreen from './components/screens/GDPRScreen'
 import HomeScreen from './components/screens/HomeScreen'
-import LoginScreen from './components/screens/LoginScreen'
+import LoginFirstScreen from './components/screens/LoginFirstScreen'
+import LoginFormScreen from './components/screens/LoginFormScreen'
 import NoMatchScreen from './components/screens/NoMatchScreen'
-import RegisterScreen from './components/screens/RegisterScreen'
+import RegisterFirstScreen from './components/screens/RegisterFirstScreen'
+import RegisterFormScreen from './components/screens/RegisterFormScreen'
 
 function App() {
   return (
@@ -21,10 +27,18 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeScreen />} />
           <Route path="/about" element={<AboutScreen />} />
-          <Route path="/auth/login" element={<LoginScreen />} />
-          <Route path="/auth/register/:asRole" element={<RegisterScreen />} />
+          <Route path="/auth/login" element={<LoginFirstScreen />} />
+          <Route path="/auth/login/:asRole" element={<LoginFormScreen />} />
+          <Route path="/auth/register" element={<RegisterFirstScreen />} />
+          <Route path="/auth/register/:asRole" element={<RegisterFormScreen />} />
+          <Route path="/champions" element={<ChampionsScreen />} />
+          <Route path="/beers" element={<BeersScreen />} />
           <Route path="/contact" element={<ContactScreen />} />
           <Route path="/gdpr" element={<GDPRScreen />} />
+
+          <Route path="/client" element={<ClientHomeScreen />} />
+
+          <Route path="/brewer" element={<BrewerHomeScreen />} />
 
           <Route path="*" element={<NoMatchScreen />} />
         </Routes>

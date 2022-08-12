@@ -8,7 +8,7 @@ class OnboardingHeaderComponent {
   }
 
   async goToRegisterPage() {
-    await this.page.click('a[data-pw="register as brewer link"]')
+    await this.page.click('a[data-pw="register link"]')
   }
 }
 

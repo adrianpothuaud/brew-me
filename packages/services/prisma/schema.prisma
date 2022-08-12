@@ -18,3 +18,68 @@ model Brewer {
   username String @unique
   hash String
 }
+
+model Beer {
+  id Int @id @default(autoincrement())
+  brewerId Int
+  name String
+  description String
+  alcoholDegree Float
+}
+
+model BeerUnit {
+  id Int @id @default(autoincrement())
+  beerId Int
+  fermentationStartedAt DateTime
+  toConsumeFrom DateTime
+  expiresAt DateTime
+  bottlePrice Float
+}
+
+model BeerUnitBottle {
+  id Int @id @default(autoincrement())
+  beerUnitId Int
+  reservedAt DateTime?
+  checkedOutAt DateTime?
+  shippedAt DateTime?
+}
+
+model Promotion {
+  id Int @id @default(autoincrement())
+  beerUnitId Int
+  minBottles Int
+  discount Int
+  startAt DateTime
+  endAt DateTime
+}
+
+model Client {
+  id Int @id @default(autoincrement())
+  name String @unique
+  email String @unique
+  phoneNumber String @unique
+  username String @unique
+  hash String
+}
+
+model Cart {
+  id Int @id @default(autoincrement())
+  clientId Int
+  beerUnitBottleIds Int[]
+  checkoutAt DateTime
+  transactionId Int
+}
+
+model Transaction {
+  id Int @id @default(autoincrement())
+  paymentMethod String
+  paymentSentAt DateTime
+  paymentReceivedAt DateTime
+  cartId Int
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+  cartId Int
+  receivedAt DateTime
+}

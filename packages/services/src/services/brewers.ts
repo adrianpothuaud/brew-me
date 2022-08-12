@@ -1,6 +1,9 @@
+import { ApplicationError } from '@brew-me/error'
 import { Brewer } from '@prisma/client'
+import _ from 'lodash'
 
-import client from '../prisma'
+import { prismaClient as client } from '../prisma'
+import catchAndParsePrismaErrors from '../utils/catchAndParsePrismaErrors'
 import hashPassword from '../utils/hashPassword'
 
 export type CreateNewBrewerInput = {
@@ -11,21 +14,38 @@ export type CreateNewBrewerInput = {
   password: string
 }
 
-export const createNewBrewer = async (input: CreateNewBrewerInput): Promise<Brewer> => {
-  const transormedInput = {
-    name: input.name,
-    username: input.username,
-    email: input.email,
-    phoneNumber: input.phoneNumber,
-    hash: hashPassword(input.password),
+export const createNewBrewer = async (input: CreateNewBrewerInput): Promise<Omit<Brewer, 'hash'> | undefined> => {
+  try {
+    if (!input.password) throw new ApplicationError(400, 'bad_request', 'password is missing')
+    const transformedInput = {
+      name: input.name,
+      username: input.username,
+      email: input.email,
+      phoneNumber: input.phoneNumber,
+      hash: hashPassword(input.password),
+    }
+    const result = await client.brewer.create({
+      data: transformedInput,
+    })
+    return _.omit(result, ['hash'])
+  } catch (e) {
+    catchAndParsePrismaErrors(e)
   }
-  const result = await client.brewer.create({
-    data: transormedInput,
-  })
-  return result
 }
 
-export const listBrewers = async () => {
+export const listBrewers = async (): Promise<Omit<Brewer, 'hash'>[]> => {
+  console.log('list brewers service start')
   const brewers = await client.brewer.findMany()
-  return brewers
+  console.log('found', brewers.length)
+  return brewers.map((b) => _.omit(b, 'hash'))
+}
+
+export const findBrewerById = async (id: number): Promise<Omit<Brewer, 'hash'>> => {
+  const brewer = await client.brewer.findUnique({ where: { id } })
+  return _.omit(brewer, 'hash')
+}
+
+export const findBrewerByUsername = async (username: string): Promise<Omit<Brewer, 'hash'>> => {
+  const brewer = await client.brewer.findUnique({ where: { username } })
+  return _.omit(brewer, 'hash')
 }

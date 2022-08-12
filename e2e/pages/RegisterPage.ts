@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test'
 
-class RegisterPage {
+export default class RegisterPage {
   page: Page
 
   constructor(page: Page) {
@@ -40,5 +40,3 @@ class RegisterPage {
     await this.submit()
   }
 }
-
-export default RegisterPage

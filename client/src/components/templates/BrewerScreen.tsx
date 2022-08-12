@@ -5,10 +5,14 @@ import React from 'react'
 
 // })
 
-export default function BrewerScreen() {
+type BrewerScreenProps = {
+  children: React.ReactNode
+}
+
+export default function BrewerScreen(props: BrewerScreenProps) {
   return (
     <>
-
+      {props.children}
     </>
   )
 }

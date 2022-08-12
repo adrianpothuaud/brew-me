@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import React from 'react'
 import { createUseStyles } from 'react-jss'
 
@@ -9,11 +10,18 @@ const useStyles = createUseStyles({
     width: 60,
   },
   centerNav: {
-    'display': 'flex',
     'flexDirection': 'row',
     '& ul': {
-      'display': 'flex',
       'flexDirection': 'row',
+    },
+  },
+  header: {
+    ...flexRowBetweenCenter,
+  },
+  nav: {
+    'display': 'flex',
+    '& ul': {
+      'display': 'flex',
       'justifyContent': 'space-around',
       'alignItems': 'center',
       'listStyleType': 'none',
@@ -22,8 +30,11 @@ const useStyles = createUseStyles({
       },
     },
   },
-  header: {
-    ...flexRowBetweenCenter,
+  rightNav: {
+    'flexDirection': 'row',
+    '& ul': {
+      'flexDirection': 'column',
+    },
   },
 })
 
@@ -35,7 +46,7 @@ export default function OnboardingHeader() {
       {/* left side brand logo */}
       <img alt="brand logo" className={classes.brandIcon} src="/favicon-32x32.png" />
       {/* header nav */}
-      <nav className={classes.centerNav}>
+      <nav className={classNames(classes.nav, classes.centerNav)}>
         <ul>
           <li>
             <a data-pw="home link" href="/">Home</a>
@@ -58,16 +69,13 @@ export default function OnboardingHeader() {
         </ul>
       </nav>
       {/* right side user menu */}
-      <nav>
+      <nav className={classNames(classes.nav, classes.rightNav)}>
         <ul>
           <li>
             <a data-pw="login link" href="/auth/login">Login</a>
           </li>
           <li>
-            <a data-pw="register as client link" href="/auth/register/client">Create Client account</a>
-          </li>
-          <li>
-            <a data-pw="register as brewer link" href="/auth/register/brewer">Create Brewer account</a>
+            <a data-pw="register link" href="/auth/register">Register</a>
           </li>
         </ul>
       </nav>

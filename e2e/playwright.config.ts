@@ -14,6 +14,10 @@ const config: PlaywrightTestConfig = {
       retries: 0,
     },
   ],
+  reporter: [
+    ['list'],
+    ['junit', { outputFile: 'results.xml' }],
+  ],
   timeout: 60000, // Timeout is shared between all tests.
   use: {
     baseURL: 'http://localhost:8080',

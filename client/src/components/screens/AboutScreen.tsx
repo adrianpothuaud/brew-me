@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet-async'
 // import { createUseStyles } from 'react-jss'
 import { LoremIpsum } from 'react-lorem-ipsum'
 
@@ -12,8 +13,14 @@ export default function AboutScreen() {
   // const classes = useStyles()
 
   return (
-    <OnboardingScreen>
-      <LoremIpsum p={2} />
-    </OnboardingScreen>
+    <>
+      <Helmet>
+        <title>Brew Me | About</title>
+      </Helmet>
+      <OnboardingScreen>
+        <h1>About us</h1>
+        <LoremIpsum p={2} />
+      </OnboardingScreen>
+    </>
   )
 }

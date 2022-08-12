@@ -2,7 +2,7 @@ import { Page } from '@playwright/test'
 
 import OnboardingHeaderComponent from '../components/OnboardingHeaderComponent'
 
-class HomePage {
+export default class HomePage {
   page: Page
   header: OnboardingHeaderComponent
 
@@ -14,10 +14,4 @@ class HomePage {
   async navigate() {
     await this.page.goto('/')
   }
-
-  async goToRegisterPage() {
-
-  }
 }
-
-export default HomePage
