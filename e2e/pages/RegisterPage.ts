@@ -31,12 +31,12 @@ export default class RegisterPage {
     await this.page.click('[data-pw="submit registration button"]')
   }
 
-  async fill(name: string, username: string, email: string, phoneNumber: string, password: string) {
-    await this.fillName(name)
-    await this.fillUsername(username)
-    await this.fillEmail(email)
-    await this.fillPhoneNumber(phoneNumber)
-    await this.fillPassword(password)
+  async fill(name: string | undefined, username: string | undefined, email: string | undefined, phoneNumber: string | undefined, password: string | undefined) {
+    if (name) await this.fillName(name)
+    if (username) await this.fillUsername(username)
+    if (email) await this.fillEmail(email)
+    if (phoneNumber) await this.fillPhoneNumber(phoneNumber)
+    if (password) await this.fillPassword(password)
     await this.submit()
   }
 }

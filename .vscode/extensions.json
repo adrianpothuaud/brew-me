@@ -1,0 +1,19 @@
+{
+	"recommendations": [
+		"naumovs.color-highlight",
+		"thearc.doppler",
+		"editorconfig.editorconfig",
+		"dbaeumer.vscode-eslint",
+		"cschleiden.vscode-github-actions",
+		"folke.vscode-monorepo-workspace",
+		"42crunch.vscode-openapi",
+		"ortoni.ortoni",
+		"ms-playwright.playwright",
+		"prisma.prisma",
+		"q.typescript-mono-repo-import-helper",
+		"lihui.vs-color-picker",
+		"redhat.vscode-yaml",
+		"christian-kohler.npm-intellisense",
+		"donjayamanne.githistory"
+	]
+}

@@ -1,22 +1,12 @@
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
-import { useForm } from 'react-hook-form'
 import { createUseStyles } from 'react-jss'
 import { LoremIpsum } from 'react-lorem-ipsum'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
-import { register } from '../../api-wrapper'
-import setAuthData from '../../auth-utils/setAuthData'
+import useRegistrationForm from '../../hooks/useRegistrationForm'
 import capitalize from '../../string-utils/capitalize'
 import OnboardingScreen from '../templates/OnboardingScreen'
-
-type RegistrationFormData = {
-  name: string;
-  email: string;
-  phoneNumber: string;
-  username: string;
-  password: string;
-};
 
 const useStyles = createUseStyles({
   pageTitle: {
@@ -26,29 +16,8 @@ const useStyles = createUseStyles({
 
 export default function RegisterFormScreen() {
   const classes = useStyles()
-  const navigate = useNavigate()
   const params = useParams()
-  const { register: rhfRegister, handleSubmit } = useForm<RegistrationFormData>()
-
-  const onSubmit = handleSubmit((data) => {
-    console.log('submitting registration form with', data)
-    register({
-      ...data,
-      role: params.asRole || 'unknown',
-    })
-      .then((response) => {
-        console.log('response from api', response.status)
-        if (response.status === 201 && response.data.user.id && response.data.token) {
-          setAuthData(response.data.user.id, response.data.token, params.asRole || 'unknown')
-          navigate(params.asRole + '/')
-        } else {
-          console.log('response is not 201')
-        }
-      })
-      .catch((e) => {
-        console.log('axios error fetching api', e.message)
-      })
-  })
+  const form = useRegistrationForm(params.asRole || 'unknown')
 
   return (
     <>
@@ -58,50 +27,61 @@ export default function RegisterFormScreen() {
       <OnboardingScreen>
         <h1 className={classes.pageTitle}>Register as {params.asRole || 'unknown'}</h1>
         <LoremIpsum p={1} />
-        <form onSubmit={onSubmit}>
+        <form onSubmit={form.submitHandler}>
           <fieldset>
             <label>Name</label>
             <input
-              {...rhfRegister('name')}
               autoComplete='name'
               data-pw="name field"
+              onChange={form.nameChangeHandler}
               type="text"
+              value={form.name}
             />
+            {form.nameError && (
+              <span className='field-error' data-pw="name error">{form.nameError}</span>
+            )}
           </fieldset>
           <fieldset>
             <label>Username</label>
             <input
-              {...rhfRegister('username')}
               autoComplete='username'
               data-pw="username field"
+              onChange={form.usernameChangeHandler}
               type="text"
+              value={form.username}
             />
+            {form.usernameError && (
+              <span className='field-error' data-pw="username error">{form.usernameError}</span>
+            )}
           </fieldset>
           <fieldset>
             <label>Email</label>
             <input
-              {...rhfRegister('email')}
               autoComplete='email'
               data-pw="email field"
+              onChange={form.emailChangeHandler}
               type="email"
+              value={form.email}
             />
           </fieldset>
           <fieldset>
             <label>Phone number</label>
             <input
-              {...rhfRegister('phoneNumber')}
               autoComplete='tel-local'
               data-pw="phone number field"
+              onChange={form.phoneNumberChangeHandler}
               type="tel"
+              value={form.phoneNumber}
             />
           </fieldset>
           <fieldset>
             <label>Password</label>
             <input
-              {...rhfRegister('password')}
               autoComplete='new-password'
               data-pw="password field"
+              onChange={form.passwordChangeHandler}
               type="password"
+              value={form.password}
             />
           </fieldset>
           <fieldset>

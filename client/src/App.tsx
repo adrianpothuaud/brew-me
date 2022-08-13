@@ -16,6 +16,7 @@ import GDPRScreen from './components/screens/GDPRScreen'
 import HomeScreen from './components/screens/HomeScreen'
 import LoginFirstScreen from './components/screens/LoginFirstScreen'
 import LoginFormScreen from './components/screens/LoginFormScreen'
+import LogoutScreen from './components/screens/LogoutScreen'
 import NoMatchScreen from './components/screens/NoMatchScreen'
 import RegisterFirstScreen from './components/screens/RegisterFirstScreen'
 import RegisterFormScreen from './components/screens/RegisterFormScreen'
@@ -39,6 +40,8 @@ function App() {
           <Route path="/client" element={<ClientHomeScreen />} />
 
           <Route path="/brewer" element={<BrewerHomeScreen />} />
+
+          <Route path="/auth/logout" element={<LogoutScreen />} />
 
           <Route path="*" element={<NoMatchScreen />} />
         </Routes>

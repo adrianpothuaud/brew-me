@@ -1,18 +1,12 @@
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
-import { useForm } from 'react-hook-form'
 import { createUseStyles } from 'react-jss'
 import { LoremIpsum } from 'react-lorem-ipsum'
 import { useParams } from 'react-router-dom'
 
-import { login } from '../../api-wrapper'
+import useLoginForm from '../../hooks/useLoginForm'
 import capitalize from '../../string-utils/capitalize'
 import OnboardingScreen from '../templates/OnboardingScreen'
-
-type LoginFormData = {
-  username: string;
-  password: string;
-};
 
 const useStyles = createUseStyles({
   pageTitle: {
@@ -23,47 +17,35 @@ const useStyles = createUseStyles({
 export default function LoginFormScreen() {
   const classes = useStyles()
   const params = useParams()
-  const { register: rhfRegister, handleSubmit } = useForm<LoginFormData>()
-
-  const onSubmit = handleSubmit((data) => {
-    console.log('submitting login form with', data)
-    login({
-      ...data,
-      role: params.asRole || 'unknown',
-    })
-      .then((response) => {
-        console.log('response from api', response.status)
-      })
-      .catch((e) => {
-        console.log('axios error fetching api', e.message)
-      })
-  })
+  const form = useLoginForm(params.asRole || 'unknown')
 
   return (
     <>
       <Helmet>
-        <title>Brew Me | {capitalize(params.asRole || 'unknown')} registration</title>
+        <title>Brew Me | {capitalize(params.asRole || 'unknown')} login</title>
       </Helmet>
       <OnboardingScreen>
-        <h1 className={classes.pageTitle}>Register as {params.asRole || 'unknown'}</h1>
+        <h1 className={classes.pageTitle}>Login as {params.asRole || 'unknown'}</h1>
         <LoremIpsum p={1} />
-        <form onSubmit={onSubmit}>
+        <form onSubmit={form.submitHandler}>
           <fieldset>
             <label>Username</label>
             <input
-              {...rhfRegister('username')}
               autoComplete='username'
               data-pw="username field"
+              onChange={form.usernameChangeHandler}
               type="text"
+              value={form.username}
             />
           </fieldset>
           <fieldset>
             <label>Password</label>
             <input
-              {...rhfRegister('password')}
               autoComplete='current-password'
               data-pw="password field"
+              onChange={form.passwordChangeHandler}
               type="password"
+              value={form.password}
             />
           </fieldset>
           <fieldset>

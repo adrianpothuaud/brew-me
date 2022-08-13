@@ -18,9 +18,7 @@ export async function login(req: Request, res: Response, next: NextFunction): Pr
     } else throw new ApplicationError(400, 'bad_request', 'role should be one of \'brewer\', \'client\'')
     if (!user) throw new ApplicationError(404, 'not_found', 'username not exist')
     const token = generateUserJWT(user, req.body.role)
-    res.status(200).json({
-      token,
-    })
+    res.status(200).json({ user, token })
   } catch (e) {
     errorHandler(e, res)
   }
@@ -29,6 +27,12 @@ export async function login(req: Request, res: Response, next: NextFunction): Pr
 export async function register(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     if (!req.body.role) throw new ApplicationError(400, 'bad_request', 'role is missing')
+    if (!req.body.username) throw new ApplicationError(400, 'bad_request', 'username is missing')
+    if (!req.body.password) throw new ApplicationError(400, 'bad_request', 'password is missing')
+    if (!req.body.name) throw new ApplicationError(400, 'bad_request', 'name is missing')
+    if (!req.body.email) throw new ApplicationError(400, 'bad_request', 'email is missing')
+    if (!req.body.phoneNumber) throw new ApplicationError(400, 'bad_request', 'phoneNumber is missing')
+
     if (req.body.role.toLowerCase() === 'brewer') {
       const newBrewer = await createNewBrewer(req.body)
       const token = generateUserJWT(_.omit(newBrewer, 'hash'), req.body.role)
