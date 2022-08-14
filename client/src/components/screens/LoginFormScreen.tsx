@@ -37,6 +37,9 @@ export default function LoginFormScreen() {
               type="text"
               value={form.username}
             />
+            {form.usernameError && (
+              <span className='field-error' data-pw="username error">{form.usernameError}</span>
+            )}
           </fieldset>
           <fieldset>
             <label>Password</label>
@@ -47,6 +50,9 @@ export default function LoginFormScreen() {
               type="password"
               value={form.password}
             />
+            {form.passwordError && (
+              <span className='field-error' data-pw="password error">{form.passwordError}</span>
+            )}
           </fieldset>
           <fieldset>
             <button

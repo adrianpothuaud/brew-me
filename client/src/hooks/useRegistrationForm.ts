@@ -63,6 +63,10 @@ export default function useRegistrationForm(role: string) {
             if (response.data.code && response.data.details === 'phoneNumber is missing') setPhoneNumberError('field is required')
             if (response.data.code && response.data.details === 'username is missing') setUsernameError('field is required')
             if (response.data.code && response.data.details === 'password is missing') setPasswordError('field is required')
+          } else if (response.status === 409) {
+            if (response.data.code && response.data.details.includes('`email`')) setEmailError('already registered')
+            if (response.data.code && response.data.details.includes('`phoneNumber`')) setPhoneNumberError('already registered')
+            if (response.data.code && response.data.details.includes('`username`')) setUsernameError('already registered')
           }
         }
       })

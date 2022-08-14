@@ -16,12 +16,14 @@ const config: PlaywrightTestConfig = {
   ],
   reporter: [
     ['list'],
-    ['junit', { outputFile: 'results.xml' }],
+    // ['html'],
+    // ['junit', { outputFile: 'results.xml' }],
   ],
   timeout: 60000, // Timeout is shared between all tests.
   use: {
     baseURL: 'http://localhost:8080',
     trace: 'on',
   },
+  workers: 1,
 }
 export default config

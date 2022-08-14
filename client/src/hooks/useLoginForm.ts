@@ -8,7 +8,9 @@ export default function useLoginForm(role: string) {
   const navigate = useNavigate()
 
   const [username, setUsername] = useState<string>('')
+  const [usernameError, setUsernameError] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [passwordError, setPasswordError] = useState<string>('')
 
   function usernameChangeHandler(e: ChangeEvent<HTMLInputElement>): void {
     setUsername(e.target.value)
@@ -32,6 +34,16 @@ export default function useLoginForm(role: string) {
         if (response.status === 200 && response.data.user && response.data.token) {
           setAuthData(response.data.user.id, response.data.token, role)
           navigate('/' + role + '/')
+        } else {
+          console.log('response is not 201')
+          if (response.status === 400) {
+            console.log('response is 400')
+            if (response.data.details === 'username is missing') setUsernameError('field is required')
+            else if (response.data.details === 'password is missing') setPasswordError('field is required')
+            else setPasswordError('bad password')
+          } else if (response.status === 404) {
+            setUsernameError('not found')
+          }
         }
       })
       .catch((e) => {
@@ -40,8 +52,8 @@ export default function useLoginForm(role: string) {
   }
 
   return {
-    username, usernameChangeHandler,
-    password, passwordChangeHandler,
+    username, usernameChangeHandler, usernameError,
+    password, passwordChangeHandler, passwordError,
 
     submitHandler,
   }

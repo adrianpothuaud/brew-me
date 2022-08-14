@@ -1,5 +1,5 @@
 import { ApplicationError } from '@brew-me/error'
-import { Brewer, Client, createNewBrewer, createNewClient, findBrewerByUsername, findClientByUsername, generateUserJWT } from '@brew-me/services'
+import { Brewer, Client, createNewBrewer, createNewClient, findBrewerByUsername, findClientByUsername, generateUserJWT, verifyPassword } from '@brew-me/services'
 import { NextFunction, Response, Request } from 'express'
 import _ from 'lodash'
 
@@ -10,15 +10,17 @@ export async function login(req: Request, res: Response, next: NextFunction): Pr
     if (!req.body.role) throw new ApplicationError(400, 'bad_request', 'role is missing')
     if (!req.body.username) throw new ApplicationError(400, 'bad_request', 'username is missing')
     if (!req.body.password) throw new ApplicationError(400, 'bad_request', 'password is missing')
-    let user: Omit<Brewer, 'hash'> | Omit<Client, 'hash'>
+    let user: Brewer | Client | null
     if (req.body.role.toLowerCase() === 'brewer') {
       user = await findBrewerByUsername(req.body.username)
     } else if (req.body.role.toLowerCase() === 'client') {
       user = await findClientByUsername(req.body.username)
     } else throw new ApplicationError(400, 'bad_request', 'role should be one of \'brewer\', \'client\'')
     if (!user) throw new ApplicationError(404, 'not_found', 'username not exist')
+    const passwordMatch = verifyPassword(user.hash, req.body.password)
+    if (!passwordMatch) throw new ApplicationError(400, 'bad_request', 'bad password')
     const token = generateUserJWT(user, req.body.role)
-    res.status(200).json({ user, token })
+    res.status(200).json({ user: _.omit(user, 'hash'), token })
   } catch (e) {
     errorHandler(e, res)
   }

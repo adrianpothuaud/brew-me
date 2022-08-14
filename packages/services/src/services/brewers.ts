@@ -3,8 +3,8 @@ import { Brewer } from '@prisma/client'
 import _ from 'lodash'
 
 import { prismaClient as client } from '../prisma'
-import catchAndParsePrismaErrors from '../utils/catchAndParsePrismaErrors'
-import hashPassword from '../utils/hashPassword'
+import { catchAndParsePrismaErrors } from '../utils/catchAndParsePrismaErrors'
+import { hashPassword } from '../utils/hashPassword'
 
 export type CreateNewBrewerInput = {
   name: string
@@ -40,12 +40,12 @@ export const listBrewers = async (): Promise<Omit<Brewer, 'hash'>[]> => {
   return brewers.map((b) => _.omit(b, 'hash'))
 }
 
-export const findBrewerById = async (id: number): Promise<Omit<Brewer, 'hash'>> => {
+export const findBrewerById = async (id: number): Promise<Brewer | null> => {
   const brewer = await client.brewer.findUnique({ where: { id } })
-  return _.omit(brewer, 'hash')
+  return brewer
 }
 
-export const findBrewerByUsername = async (username: string): Promise<Omit<Brewer, 'hash'>> => {
+export const findBrewerByUsername = async (username: string): Promise<Brewer | null> => {
   const brewer = await client.brewer.findUnique({ where: { username } })
-  return _.omit(brewer, 'hash')
+  return brewer
 }

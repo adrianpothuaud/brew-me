@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test'
 
-export default class RegisterPage {
+export default class RegisterFormPage {
   page: Page
 
   constructor(page: Page) {

@@ -8,7 +8,10 @@ module.exports = {
     'plugin:react/recommended',
     'google',
   ],
-  'ignorePatterns': ['**/dist/*'],
+  'ignorePatterns': [
+    '**/dist/*',
+    'e2e/playwright-report/**/*',
+  ],
   'parser': '@typescript-eslint/parser',
   'parserOptions': {
     'ecmaFeatures': {

@@ -3,8 +3,8 @@ import { Client } from '@prisma/client'
 import _ from 'lodash'
 
 import { prismaClient as client } from '../prisma'
-import catchAndParsePrismaErrors from '../utils/catchAndParsePrismaErrors'
-import hashPassword from '../utils/hashPassword'
+import { catchAndParsePrismaErrors } from '../utils/catchAndParsePrismaErrors'
+import { hashPassword } from '../utils/hashPassword'
 
 export type CreateNewClientInput = {
   name: string
@@ -40,12 +40,12 @@ export const listClients = async (): Promise<Omit<Client, 'hash'>[]> => {
   return clients.map((b) => _.omit(b, 'hash'))
 }
 
-export const findClientById = async (id: number): Promise<Omit<Client, 'hash'>> => {
+export const findClientById = async (id: number): Promise<Client | null> => {
   const foundClient = await client.client.findUnique({ where: { id } })
-  return _.omit(foundClient, 'hash')
+  return foundClient
 }
 
-export const findClientByUsername = async (username: string): Promise<Omit<Client, 'hash'>> => {
+export const findClientByUsername = async (username: string): Promise<Client | null> => {
   const foundClient = await client.client.findUnique({ where: { username } })
-  return _.omit(foundClient, 'hash')
+  return foundClient
 }

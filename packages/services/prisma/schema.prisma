@@ -12,7 +12,7 @@ datasource db {
 
 model Brewer {
   id Int @id @default(autoincrement())
-  name String @unique
+  name String
   email String @unique
   phoneNumber String @unique
   username String @unique
@@ -55,7 +55,7 @@ model Promotion {
 
 model Client {
   id Int @id @default(autoincrement())
-  name String @unique
+  name String
   email String @unique
   phoneNumber String @unique
   username String @unique

@@ -10,9 +10,9 @@
   "scripts": {
     "build": "tsc --build --verbose",
     "watch:build": "tsc --build --verbose -w",
-    "db:reset": "node dist/scripts/prisma/reset.js",
-    "db:stdio": "prisma studio",
-    "db:sync": "prisma db push && prisma generate"
+    "db:reset": "doppler run -- node dist/scripts/prisma/reset.js",
+    "db:stdio": "doppler run -- prisma studio",
+    "db:sync": "doppler run -- prisma db push && prisma generate"
   },
   "keywords": [],
   "author": "",

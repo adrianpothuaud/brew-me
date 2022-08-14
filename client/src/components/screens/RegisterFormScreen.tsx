@@ -63,6 +63,9 @@ export default function RegisterFormScreen() {
               type="email"
               value={form.email}
             />
+            {form.emailError && (
+              <span className='field-error' data-pw="email error">{form.emailError}</span>
+            )}
           </fieldset>
           <fieldset>
             <label>Phone number</label>
@@ -73,6 +76,9 @@ export default function RegisterFormScreen() {
               type="tel"
               value={form.phoneNumber}
             />
+            {form.phoneNumberError && (
+              <span className='field-error' data-pw="phone number error">{form.phoneNumberError}</span>
+            )}
           </fieldset>
           <fieldset>
             <label>Password</label>
@@ -83,6 +89,9 @@ export default function RegisterFormScreen() {
               type="password"
               value={form.password}
             />
+            {form.passwordError && (
+              <span className='field-error' data-pw="password error">{form.passwordError}</span>
+            )}
           </fieldset>
           <fieldset>
             <button

@@ -1,7 +1,7 @@
 import { BeerUnitBottle } from '@prisma/client'
 
 import { prismaClient as client } from '../prisma'
-import catchAndParsePrismaErrors from '../utils/catchAndParsePrismaErrors'
+import { catchAndParsePrismaErrors } from '../utils/catchAndParsePrismaErrors'
 
 export type CreateNewBeerUnitBottleInput = {
   beerUnitId: number

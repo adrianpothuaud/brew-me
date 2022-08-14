@@ -1,7 +1,7 @@
 import { ApplicationError } from '@brew-me/error'
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@prisma/client/runtime'
 
-export default function catchAndParsePrismaErrors(e: unknown) {
+export function catchAndParsePrismaErrors(e: unknown) {
   if (e instanceof PrismaClientValidationError) {
     console.log(
       'prisma validation error detected',
