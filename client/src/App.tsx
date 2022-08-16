@@ -8,6 +8,8 @@ import {
 
 import AboutScreen from './components/screens/AboutScreen'
 import BeersScreen from './components/screens/BeersScreen'
+import BrewerBeerFormScreen from './components/screens/BrewerBeerFormScreen'
+import BrewerBeersScreen from './components/screens/BrewerBeersScreen'
 import BrewerHomeScreen from './components/screens/BrewerHomeScreen'
 import ChampionsScreen from './components/screens/ChampionsScreen'
 import ClientHomeScreen from './components/screens/ClientHomeScreen'
@@ -40,6 +42,8 @@ function App() {
           <Route path="/client" element={<ClientHomeScreen />} />
 
           <Route path="/brewer" element={<BrewerHomeScreen />} />
+          <Route path="/brewer/beers" element={<BrewerBeersScreen />} />
+          <Route path="/brewer/beers/add" element={<BrewerBeerFormScreen />} />
 
           <Route path="/auth/logout" element={<LogoutScreen />} />
 
