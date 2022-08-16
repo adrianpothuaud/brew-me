@@ -7,3 +7,17 @@ node_modules/
 **/.idea/
 **/dist/
 **/node_modules/
+
+**/vite.config.ts.timestamp*
+
+.DS_Store
+**/.DS_Store
+
+e2e/results.xml
+
+**/*.tsbuildinfo
+
+**/*.env
+
+e2e/test-results/**/*
+e2e/playwright-report/**/*
